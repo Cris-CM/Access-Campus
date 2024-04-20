@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/widgets/textos/list_text.dart';
 import 'package:qr_tracker/widgets/textos/text_calendari.dart';
 import 'package:qr_tracker/widgets/textos/text_drawer.dart';
 
-class Inicio extends StatelessWidget {
-  const Inicio({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class Inicio extends StatelessWidget {
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.80,
         child: Drawer(
-          backgroundColor: const Color(0xFF243659),
+          backgroundColor: Palette.blueBlack,
           child: Padding(
             padding: const EdgeInsets.only(
               top: 50,
@@ -25,7 +26,7 @@ class Inicio extends StatelessWidget {
                   child: const ListTile(
                     title: ListText(
                       text: 'Hola, CRIS',
-                      color: Colors.white,
+                      color: Palette.white,
                       fontbold: true,
                       fontSize: 20,
                     ),
@@ -35,12 +36,12 @@ class Inicio extends StatelessWidget {
                         ListText(
                           text: 'Carrera',
                           fontbold: true,
-                          color: Colors.red,
+                          color: Palette.red,
                           fontSize: 20,
                         ),
                         ListText(
                           text: 'INGENIERIA DE\nSISTEMAS',
-                          color: Colors.white,
+                          color: Palette.white,
                           fontSize: 20,
                           fontbold: true,
                         ),
@@ -55,7 +56,7 @@ class Inicio extends StatelessWidget {
                 Container(
                   padding:
                       const EdgeInsets.only(top: 150, left: 90, bottom: 150),
-                  color: Colors.white,
+                  color: Palette.white,
                   child: const Column(
                     children: [
                       TextDrawer(
@@ -99,7 +100,7 @@ class Inicio extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.tealAccent, //fondo del titulo
+        backgroundColor: Palette.white, //fondo del titulo
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -126,7 +127,7 @@ class Inicio extends StatelessWidget {
               height: 200,
               padding: const EdgeInsets.only(top: 20),
               decoration: const BoxDecoration(
-                color: Color(0xFF243659),
+                color: Palette.blueBlack,
               ),
               child: Column(
                 children: [
@@ -135,18 +136,18 @@ class Inicio extends StatelessWidget {
                     children: [
                       ListText(
                         text: 'Mi Horario',
-                        color: Colors.white,
+                        color: Palette.white,
                         fontbold: true,
                         fontSize: 20,
                       ),
                       ListText(
                         text: 'Hoy',
-                        color: Colors.white70,
+                        color: Palette.white70,
                         fontSize: 20,
                       ),
                       ListText(
                         text: 'Abril 2024',
-                        color: Colors.white,
+                        color: Palette.white,
                         fontSize: 20,
                         fontbold: true,
                       ),

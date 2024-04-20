@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:qr_tracker/pages/inicio.dart';
+import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/pages/home_page.dart';
 import 'package:qr_tracker/widgets/textos/list_text.dart';
 import 'package:qr_tracker/widgets/text_password.dart';
 import 'package:qr_tracker/widgets/text_user.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
+                color: Palette.white,
               ),
               child: Padding(
                 padding:
@@ -43,14 +44,14 @@ class _LoginState extends State<Login> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          title: ListText(
+                          title: const ListText(
                             text: 'Bienvenido a',
-                            color: Colors.blue.shade900,
+                            color: Palette.blueBlack,
                             fontSize: 17,
                           ),
-                          subtitle: ListText(
+                          subtitle: const ListText(
                             text: 'Trilce UCV',
-                            color: Colors.indigo.shade900,
+                            color: Palette.blueBlack,
                           ),
                           trailing:
                               Image.asset('assets/pikachu.png', width: 90),
@@ -62,7 +63,7 @@ class _LoginState extends State<Login> {
                         Text(
                           'Recordar contraseña',
                           style: TextStyle(
-                            color: Colors.grey.shade600,
+                            color: Palette.grey,
                             fontSize: 18,
                           ),
                         ),
@@ -74,27 +75,27 @@ class _LoginState extends State<Login> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const Inicio(),
+                                      builder: (context) => const HomePage(),
                                     ),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.indigo.shade900,
+                                  backgroundColor: Palette.blue,
                                 ),
                                 child: const Text(
                                   'Iniciar Sesion',
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Palette.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
                               TextButton(
                                 onPressed: () {},
-                                child: Text(
+                                child: const Text(
                                   'Olvidaste la contraseña',
                                   style: TextStyle(
-                                    color: Colors.blueGrey.shade900,
+                                    color: Palette.blueBlack,
                                     fontSize: 15,
                                     decoration: TextDecoration.underline,
                                   ),

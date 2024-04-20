@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_tracker/pages/login.dart';
+import 'package:qr_tracker/pages/login_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'TRILCE',
       home: Scaffold(
-        body: Login(),
+        body: LoginPage(),
       ),
     );
   }
