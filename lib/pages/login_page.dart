@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Palette.blue,
+                                  backgroundColor: Palette.blue900,
                                 ),
                                 child: const Text(
                                   'Iniciar Sesion',
