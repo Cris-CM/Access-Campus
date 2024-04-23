@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/widgets/textos/list_text.dart';
-import 'package:qr_tracker/widgets/textos/text_calendari.dart';
-import 'package:qr_tracker/widgets/textos/text_drawer.dart';
+import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
+import 'package:qr_tracker/widgets/textfields/text/text_calendari.dart';
+import 'package:qr_tracker/widgets/textfields/text/text_drawer.dart';
+import 'package:qr_tracker/widgets/textfields/text_icon/icon_text.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,6 +11,30 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Palette.white,
+        unselectedItemColor: Palette.white,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        selectedFontSize: 20,
+        iconSize: 30,
+        backgroundColor: Palette.blueBlack,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_filled,
+              color: Palette.white,
+            ),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: 'Inicio',
+          ),
+        ],
+      ),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.80,
         child: Drawer(
@@ -25,7 +50,7 @@ class HomePage extends StatelessWidget {
                   color: const Color(0xFF243659),
                   child: const ListTile(
                     title: ListText(
-                      text: 'Hola, CRIS',
+                      text: 'Hola, LALO',
                       color: Palette.white,
                       fontbold: true,
                       fontSize: 20,
@@ -100,7 +125,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Palette.white, //fondo del titulo
+        backgroundColor: Palette.white,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -172,6 +197,81 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(60),
+              decoration: BoxDecoration(
+                color: Palette.grey600,
+              ),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListText(
+                    text: 'No tienes clases Programadas',
+                    fontSize: 20,
+                    color: Palette.white,
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              color: Palette.grey200,
+              padding: const EdgeInsets.symmetric(vertical: 60),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconText(
+                    texto: 'Mapa del\n Campus',
+                    icono: Icons.location_on,
+                  ),
+                  SizedBox(
+                    width: 80,
+                  ),
+                  IconText(
+                    texto: '   Citas\nmèdicas',
+                    icono: Icons.local_hospital,
+                  ),
+                  SizedBox(
+                    width: 80,
+                  ),
+                  IconText(
+                    texto: '      Mis\nBeneficios',
+                    icono: Icons.emoji_objects,
+                  ),
+                ],
+              ),
+            ),
+            const Divider(
+              color: Palette.blueBlack,
+              thickness: 3,
+              height: 20,
+              indent: 20,
+              endIndent: 20,
+            ),
+            Row(
+              children: [
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 15)),
+                const ListText(
+                  text: 'CURSO DEL DIA\nDE MAÑANA:',
+                  color: Palette.blueBlack,
+                  fontbold: true,
+                  fontSize: 22,
+                ),
+                const SizedBox(width: 250),
+                TextButton(
+                  onPressed: () {},
+                  child: const ListText(
+                    text: 'Ver màs',
+                    color: Palette.blueBlack,
+                    fontbold: true,
+                    fontSize: 22,
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios)
+              ],
             ),
           ],
         ),

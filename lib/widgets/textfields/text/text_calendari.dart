@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/widgets/textos/list_text.dart';
+import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
 class Calendari extends StatelessWidget {
   const Calendari({super.key});
@@ -24,7 +24,7 @@ class Calendari extends StatelessWidget {
           ListText(
             text: '20',
             fontSize: 20,
-            color: Palette.grey,
+            color: Palette.grey600,
           )
         ],
       ),
