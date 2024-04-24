@@ -27,13 +27,19 @@ class HomePage extends StatelessWidget {
               Icons.home_filled,
               color: Palette.white,
             ),
-            label: 'Inicio',
+            label: 'HOME',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.qr_code_scanner,
+            ),
+            label: 'CHECK-IN',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
             ),
-            label: 'Inicio',
+            label: 'PERFIL',
           ),
         ],
       ),
@@ -203,7 +209,7 @@ class HomePage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(60),
               decoration: BoxDecoration(
-                color: Palette.grey600,
+                color: Palette.blue900,
               ),
               child: const Column(
                 mainAxisSize: MainAxisSize.min,
@@ -249,11 +255,17 @@ class HomePage extends StatelessWidget {
               indent: 20,
               endIndent: 20,
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: const Column(
                 children: [
                   CoursesDay(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Courses(text: 'INGENIERÍA DE SOFTWARE'),
                   SizedBox(
                     height: 20,
