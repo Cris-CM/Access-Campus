@@ -10,4 +10,5 @@ class Palette {
   static final blue900 = Colors.indigo.shade900;
   static const blue = Colors.blue;
   static final grey200 = Colors.grey.shade200;
+  static final grey400 = Colors.grey.shade400;
 }

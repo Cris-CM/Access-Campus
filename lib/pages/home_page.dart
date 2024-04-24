@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/widgets/textfields/cursDay/cours.dart';
+import 'package:qr_tracker/widgets/textfields/cursDay/courses_day.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 import 'package:qr_tracker/widgets/textfields/text/text_calendari.dart';
 import 'package:qr_tracker/widgets/textfields/text/text_drawer.dart';
@@ -191,7 +193,7 @@ class HomePage extends StatelessWidget {
                         return const SizedBox(width: 20);
                       },
                       itemBuilder: (BuildContext context, int index) {
-                        return const Calendari();
+                        return const TextCalendari();
                       },
                     ),
                   ),
@@ -214,12 +216,8 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
             Container(
-              color: Palette.grey200,
-              padding: const EdgeInsets.symmetric(vertical: 60),
+              padding: const EdgeInsets.symmetric(vertical: 45),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -246,33 +244,17 @@ class HomePage extends StatelessWidget {
             ),
             const Divider(
               color: Palette.blueBlack,
-              thickness: 3,
+              thickness: 1,
               height: 20,
               indent: 20,
               endIndent: 20,
             ),
-            Row(
-              children: [
-                const Padding(padding: EdgeInsets.symmetric(horizontal: 15)),
-                const ListText(
-                  text: 'CURSO DEL DIA\nDE MAÑANA:',
-                  color: Palette.blueBlack,
-                  fontbold: true,
-                  fontSize: 22,
-                ),
-                const SizedBox(width: 250),
-                TextButton(
-                  onPressed: () {},
-                  child: const ListText(
-                    text: 'Ver màs',
-                    color: Palette.blueBlack,
-                    fontbold: true,
-                    fontSize: 22,
-                  ),
-                ),
-                const Icon(Icons.arrow_forward_ios)
-              ],
+            const CoursesDay(),
+            const Courses(),
+            const SizedBox(
+              height: 20,
             ),
+            const Courses(text: 'GESTION DE DATOS II'),
           ],
         ),
       ),

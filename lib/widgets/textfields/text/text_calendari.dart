@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
-class Calendari extends StatelessWidget {
-  const Calendari({super.key});
+class TextCalendari extends StatelessWidget {
+  const TextCalendari({super.key});
 
   @override
   Widget build(BuildContext context) {
