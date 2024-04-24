@@ -25,7 +25,7 @@ class CoursesDay extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Page2(),
+                      builder: (context) => const Page2(),
                     ));
               },
               child: const Row(
