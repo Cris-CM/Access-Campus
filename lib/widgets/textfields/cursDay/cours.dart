@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/widgets/iconButton/icon.button.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
 class Courses extends StatelessWidget {
@@ -13,7 +14,6 @@ class Courses extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Padding(padding: EdgeInsets.symmetric(horizontal: 15)),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
           decoration: BoxDecoration(
@@ -44,36 +44,27 @@ class Courses extends StatelessWidget {
         const SizedBox(
           width: 35,
         ),
-        const ListText(
-          text: 'INGENIERÍA DE SOFTWARE',
+        ListText(
+          text: text,
           color: Palette.blueBlack,
           fontbold: true,
           fontSize: 22,
         ),
-        const SizedBox(
-          width: 95,
-        ),
+        const Spacer(),
         Container(
-          decoration: BoxDecoration(
-            color: Palette.grey200,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5), // Color de la sombra
-                spreadRadius: 5, // Radio de expansión de la sombra
-                blurRadius: 7, // Radio de desenfoque de la sombra
-                offset: const Offset(0, 3), // Desplazamiento de la sombra
-              ),
-            ],
-          ),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              color: Palette.red,
+            decoration: BoxDecoration(
+              color: Palette.grey200,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5), // Color de la sombra
+                  spreadRadius: 5, // Radio de expansión de la sombra
+                  blurRadius: 7, // Radio de desenfoque de la sombra
+                  offset: const Offset(0, 3), // Desplazamiento de la sombra
+                ),
+              ],
             ),
-          ),
-        ),
+            child: const IconForward()),
       ],
     );
   }

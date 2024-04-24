@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/pages/page2.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
 class CoursesDay extends StatelessWidget {
@@ -11,28 +12,41 @@ class CoursesDay extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 15)),
             const ListText(
               text: 'CURSO DEL DIA\nDE MAÑANA:',
               color: Palette.blueBlack,
               fontbold: true,
               fontSize: 22,
             ),
-            const SizedBox(width: 250),
-            TextButton(
-              onPressed: () {},
-              child: const ListText(
-                text: 'Ver màs',
-                color: Palette.blueBlack,
-                fontbold: true,
-                fontSize: 22,
+            const Spacer(),
+            InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Page2(),
+                    ));
+              },
+              child: const Row(
+                children: [
+                  Text(
+                    'Ver màs',
+                    style: TextStyle(
+                      color: Palette.blueBlack,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Palette.red,
+                  ),
+                ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios)
           ],
-        ),
-        const SizedBox(
-          height: 20,
         ),
       ],
     );

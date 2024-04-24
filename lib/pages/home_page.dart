@@ -249,12 +249,19 @@ class HomePage extends StatelessWidget {
               indent: 20,
               endIndent: 20,
             ),
-            const CoursesDay(),
-            const Courses(),
-            const SizedBox(
-              height: 20,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const Column(
+                children: [
+                  CoursesDay(),
+                  Courses(text: 'INGENIERÍA DE SOFTWARE'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Courses(text: 'GESTION DE DATOS II'),
+                ],
+              ),
             ),
-            const Courses(text: 'GESTION DE DATOS II'),
           ],
         ),
       ),
