@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_tracker/core/colors/palette.dart';
 
 class TextPassword extends StatefulWidget {
   const TextPassword({super.key});
@@ -14,7 +15,7 @@ class _TextPasswordState extends State<TextPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.grey.shade200),
+      decoration: BoxDecoration(color: Palette.grey200),
       child: TextField(
         obscureText: true,
         keyboardType: TextInputType.number,

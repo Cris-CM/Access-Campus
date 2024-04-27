@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_tracker/core/colors/palette.dart';
 
 class CustomInput extends StatelessWidget {
   const CustomInput({super.key, required this.title, required this.icon});
@@ -7,13 +8,16 @@ class CustomInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        icon: Icon(icon),
-        hintText: title,
-        border: InputBorder.none,
+    return Container(
+      color: Palette.grey200,
+      child: TextField(
+        decoration: InputDecoration(
+          icon: Icon(icon),
+          hintText: title,
+          border: InputBorder.none,
+        ),
+        style: const TextStyle(fontSize: 20),
       ),
-      style: const TextStyle(fontSize: 20),
     );
   }
 }

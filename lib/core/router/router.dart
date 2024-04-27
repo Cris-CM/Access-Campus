@@ -7,11 +7,11 @@ final goRouter = GoRouter(
   routes: [
     GoRoute(
       path: "/login",
-      builder: (context, state) => LoginPage(),
+      builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
       path: "/home",
-      builder: (context, state) => HomePage(),
+      builder: (context, state) => const HomePage(),
     ),
   ],
 );

@@ -9,8 +9,9 @@ class IconForward extends StatelessWidget {
     return IconButton(
       onPressed: () {},
       icon: const Icon(
-        Icons.arrow_forward_ios,
-        color: Palette.red,
+        Icons.qr_code_scanner,
+        color: Palette.black,
+        size: 30,
       ),
     );
   }
