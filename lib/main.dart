@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_tracker/pages/login_page.dart';
+import 'package:qr_tracker/core/router/router.dart'; 
 
 void main() => runApp(const MyApp());
 
@@ -8,11 +8,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'TRILCE',
-      home: Scaffold(
-        body: LoginPage(),
-      ),
+    return   MaterialApp.router(
+      title: 'Access Campus',
+      routerConfig: goRouter,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

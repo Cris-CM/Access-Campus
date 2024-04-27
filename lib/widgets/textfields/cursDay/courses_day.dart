@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/pages/page2.dart';
+import 'package:qr_tracker/Features/page2.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
 class CoursesDay extends StatelessWidget {
@@ -22,11 +22,7 @@ class CoursesDay extends StatelessWidget {
             InkWell(
               borderRadius: BorderRadius.circular(15),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Page2(),
-                    ));
+                
               },
               child: const Row(
                 children: [

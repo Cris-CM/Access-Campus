@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/pages/home_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:qr_tracker/core/colors/palette.dart'; 
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 import 'package:qr_tracker/widgets/text_password.dart';
 import 'package:qr_tracker/widgets/text_user.dart';
@@ -72,12 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomePage(),
-                                    ),
-                                  );
+                                 context.go("/home");
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Palette.blue900,
