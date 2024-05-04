@@ -13,7 +13,7 @@ class CoursesDay extends StatelessWidget {
           children: [
             const ListText(
               text: 'CURSO DEL DIA\nDE MAÑANA:',
-              color: Palette.blueBlack,
+              color: Palette.kPrimary,
               fontbold: true,
               fontSize: 22,
             ),
@@ -26,7 +26,7 @@ class CoursesDay extends StatelessWidget {
                   Text(
                     'Ver màs',
                     style: TextStyle(
-                      color: Palette.blueBlack,
+                      color: Palette.kPrimary,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,

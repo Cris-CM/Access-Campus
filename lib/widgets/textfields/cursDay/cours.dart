@@ -1,5 +1,4 @@
-import 'package:easy_padding/easy_padding.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/widgets/iconButton/icon.button.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
@@ -35,14 +34,14 @@ class Courses extends StatelessWidget {
                     text: '20',
                     fontSize: 29,
                     fontbold: true,
-                    color: Palette.blueBlack,
+                    color: Palette.kPrimary,
                   )
                 ],
               ),
-            ).only(right: 25),
+            ) ,
             const ListText(
               text: 'INGENIERIA DE SOTFWARE',
-              color: Palette.blueBlack,
+              color: Palette.kPrimary,
               fontbold: true,
               fontSize: 22,
             ),
@@ -63,9 +62,9 @@ class Courses extends StatelessWidget {
               child: const IconForward(),
             ),
           ],
-        ).only(bottom: 25),
+        ) ,
         const Divider(
-          color: Palette.blueBlack,
+          color: Palette.kPrimary,
           thickness: 2,
           height: 25,
           indent: 5,

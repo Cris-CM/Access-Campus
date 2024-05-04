@@ -1,12 +1,11 @@
-import 'package:easy_padding/easy_padding.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/widgets/textfields/cursDay/cours.dart';
 import 'package:qr_tracker/widgets/textfields/cursDay/courses_day.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class HomePage extends StatelessWidget {
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.80,
         child: Drawer(
-          backgroundColor: Palette.blueBlack,
+          backgroundColor: Palette.kPrimary,
           child: Padding(
             padding: const EdgeInsets.only(
               top: 50,
@@ -66,7 +65,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Palette.blueBlack,
+        backgroundColor: Palette.kPrimary,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -97,7 +96,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
-                  const CoursesDay().only(bottom: 10),
+                  const CoursesDay() ,
                   ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
