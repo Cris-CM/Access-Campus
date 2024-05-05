@@ -62,7 +62,7 @@ class LoginView extends GetView<AuthController> {
                   alignment: Alignment.center,
                   child: CustomButton(
                     onPressed: () {
-                      Get.to("/home");
+                      Get.toNamed("/home");
                     },
                     text: "Iniciar Sesion",
                   ),
