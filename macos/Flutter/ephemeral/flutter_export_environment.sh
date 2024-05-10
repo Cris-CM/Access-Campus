@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\Users\edyne\fvm\versions\3.19.6"
-export "FLUTTER_APPLICATION_PATH=D:\Apps\Access-Campus"
+export "FLUTTER_ROOT=C:\Users\Liz\fvm\versions\3.19.6"
+export "FLUTTER_APPLICATION_PATH=C:\Users\Liz\Documents\GitHub\NTC Totoro Pets\ntc_totoro_pets\Access-Campus"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"
