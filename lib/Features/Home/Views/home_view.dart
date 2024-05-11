@@ -1,10 +1,16 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_tracker/Features/Home/Controllers/home_controller.dart';
+import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/widgets/textfields/cursDay/cours.dart';
-import 'package:qr_tracker/widgets/textfields/cursDay/courses_day.dart';
+import 'package:qr_tracker/core/widgets/circular_loading.dart';
+import 'package:qr_tracker/core/widgets/texts.dart';
+import 'package:qr_tracker/Features/Home/Widgets/courses_item.dart';
 import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
+import 'package:sizer/sizer.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
   @override
@@ -86,34 +92,48 @@ class HomeView extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  const CoursesDay() ,
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: 8,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        child: Courses(),
-                      );
-                    },
-                  ),
-                ],
+      body: Obx(() {
+        if (controller.loading()) {
+          return const CircularLoadingWidget();
+        }
+
+        return RefreshIndicator(
+          onRefresh: () async {
+            await controller.getClasses();
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Texts.bold(
+                "LABORATORIOS:",
+                fontSize: 15,
+                color: Palette.kPrimary,
+              ).marginAll(4.w),
+              Expanded(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.kPrimary,
+                    );
+                  },
+                  scrollDirection: Axis.vertical,
+                  itemCount: controller.classesList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CoursesItem(
+                      classes: controller.classesList[index],
+                      onPressed: () {
+                        Get.to(const QrScanView());
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

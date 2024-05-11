@@ -8,17 +8,23 @@ class CustomInput extends StatelessWidget {
     required this.icon,
     this.isPassword = false,
     this.inputType,
+    this.controller,
+    this.validator,
   });
   final String title;
   final IconData icon;
   final bool isPassword;
   final TextInputType? inputType;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: isPassword,
       keyboardType: inputType,
+      validator: validator,
       decoration: InputDecoration(
         fillColor: Palette.grey200,
         filled: true,
