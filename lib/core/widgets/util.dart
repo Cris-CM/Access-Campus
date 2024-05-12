@@ -34,4 +34,35 @@ class Util {
       ),
     );
   }
+
+  static void successSnackBar(String message, {String title = 'Mensaje'}) {
+    Get.showSnackbar(
+      GetSnackBar(
+        titleText: Texts.bold(
+          title.tr,
+          color: Palette.kPrimary,
+          fontSize: 12,
+        ),
+        messageText: Texts.normal(
+          message,
+          color: Palette.kPrimary,
+          fontSize: 10,
+        ),
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(20),
+        backgroundColor: Colors.green,
+        icon: const Icon(
+          Icons.check,
+          size: 32,
+          color: Palette.kPrimary,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
+        borderRadius: 8,
+        duration: const Duration(seconds: 5),
+      ),
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
@@ -11,7 +10,6 @@ class HomeController extends GetxController {
   QRViewController? controller;
   Barcode? result;
   final authController = Get.find<AuthController>();
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final loading = false.obs;
   final classesList = <ClassesModel>[].obs;
 
@@ -52,30 +50,46 @@ class HomeController extends GetxController {
     }
   }
 
-  void onQRViewCreated(QRViewController controller) {
+  void onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
-    controller.pauseCamera(); 
-    controller.resumeCamera();
-    
-    controller.scannedDataStream.listen((scanData) {
-      navigateToNextScreen("13");
-      if (scanData.format == BarcodeFormat.qrcode &&
-          scanData.code!.isNotEmpty) {
-        controller.pauseCamera();
-        navigateToNextScreen(scanData.code.toString());
+    await controller.pauseCamera();
+    //  await controller.resumeCamera();
+
+    await sendEntry(1);
+    // controller.scannedDataStream.listen((scanData) async {
+    //   controller.pauseCamera();
+    //   await sendEntry(1);
+    // if (scanData.format == BarcodeFormat.qrcode &&
+    //     scanData.code!.isNotEmpty) {
+    //   controller.pauseCamera();
+    //   await sendEntry(int.parse(scanData.code ?? "0"));
+    // }
+    //  });
+  }
+
+  Future<void> sendEntry(int classId) async {
+    try {
+      loading(true);
+      final data = {
+        "UserId": authController.user.id,
+        "ClassId": classId,
+      };
+
+      final response = await dio.post("entries/register", data: data);
+
+      if (response.statusCode != 200) {
+        throw response.data["data"];
       }
-    });
-  }
 
-  void onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
+      await getClasses();
+       Util.successSnackBar(response.data["data"]);
+    } on DioException catch (e) {
+      Util.errorSnackBar(e.response!.data["data"]);
+    } catch (e) {
+      Util.errorSnackBar(e.toString());
+    } finally {
+      Get.toNamed("/home");
+      loading(false);
     }
-  }
-
-  void navigateToNextScreen(String qrData) {
-    Get.back(result: qrData);
   }
 }

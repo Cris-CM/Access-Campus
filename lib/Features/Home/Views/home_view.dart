@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_controller.dart';
 import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
@@ -124,7 +123,7 @@ class HomeView extends GetView<HomeController> {
                     return CoursesItem(
                       classes: controller.classesList[index],
                       onPressed: () {
-                        Get.to(const QrScanView());
+                        Get.toNamed("/qrscan");
                       },
                     );
                   },

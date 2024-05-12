@@ -14,7 +14,7 @@ class QrScanView extends GetView<HomeController> {
           Expanded(
             flex: 5,
             child: QRView(
-              key: controller.qrKey,
+              key: GlobalKey(debugLabel: 'QR'),
               onQRViewCreated: controller.onQRViewCreated,
             ),
           ),
