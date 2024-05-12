@@ -4,6 +4,8 @@ import 'package:qr_tracker/Features/Auth/Views/login_view.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_binding.dart';
 import 'package:qr_tracker/Features/Home/Views/home_view.dart';
 import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
+import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
+ import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
 
 final getRouter = <GetPage>[
   GetPage(
@@ -19,5 +21,10 @@ final getRouter = <GetPage>[
   GetPage(
     name: "/qrscan",
     page: () => const QrScanView(),
+  ),
+  GetPage(
+    name: "/labs",
+    page: () => const LabsView(),
+    binding: LabsBinding(),
   ),
 ];

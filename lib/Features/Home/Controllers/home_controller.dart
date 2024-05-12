@@ -19,6 +19,7 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
+ 
   @override
   void dispose() {
     controller!.dispose();

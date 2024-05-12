@@ -135,7 +135,7 @@ class Texts extends StatelessWidget {
     this.onTap,
   }) : fontWeight = FontWeight.w700;
 
-  const Texts.normal(
+  const Texts.regular(
     this.text, {
     super.key,
     this.height = 1,

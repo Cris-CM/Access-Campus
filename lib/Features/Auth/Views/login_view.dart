@@ -44,7 +44,7 @@ class LoginView extends GetView<AuthController> {
                     children: [
                       const ListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: Texts.normal(
+                        title: Texts.regular(
                           'Bienvenido a',
                           color: Palette.kPrimary,
                           fontSize: 12,

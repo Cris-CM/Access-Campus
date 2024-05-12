@@ -12,7 +12,7 @@ class Util {
           color: Palette.kPrimary,
           fontSize: 12,
         ),
-        messageText: Texts.normal(
+        messageText: Texts.regular(
           message,
           color: Palette.kPrimary,
           fontSize: 10,
@@ -43,7 +43,7 @@ class Util {
           color: Palette.kPrimary,
           fontSize: 12,
         ),
-        messageText: Texts.normal(
+        messageText: Texts.regular(
           message,
           color: Palette.kPrimary,
           fontSize: 10,

@@ -12,6 +12,8 @@ class AuthController extends GetxController {
   late UserModel user;
   final loading = false.obs;
 
+  bool isTeacher() => user.rol == 2;
+
   Future<void> login() async {
     if (!loginKey.currentState!.validate()) return;
 

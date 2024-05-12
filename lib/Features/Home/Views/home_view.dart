@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_controller.dart';
-import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/core/widgets/circular_loading.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:qr_tracker/Features/Home/Widgets/courses_item.dart';
-import 'package:qr_tracker/widgets/textfields/text/list_text.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -15,79 +13,78 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.80,
-        child: Drawer(
-          backgroundColor: Palette.kPrimary,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 50,
-            ),
-            child: ListView(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 20, bottom: 70),
-                  color: const Color(0xFF243659),
-                  child: const ListTile(
-                    title: ListText(
-                      text: 'Hola, Cris',
-                      color: Palette.white,
-                      fontbold: true,
-                      fontSize: 20,
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListText(
-                          text: 'Carrera',
-                          fontbold: true,
-                          color: Palette.red,
-                          fontSize: 20,
+      drawer: controller.authController.isTeacher()
+          ? SizedBox(
+              width: MediaQuery.of(context).size.width * 0.80,
+              child: Drawer(
+                backgroundColor: Palette.kPrimary,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 1.h, bottom: 3.h),
+                        color: Palette.kPrimary,
+                        child: ListTile(
+                          title: Texts.bold(
+                            "Bienvenido, ${controller.authController.user.name}",
+                            color: Palette.white,
+                            fontSize: 13,
+                          ),
+                          leading: const CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage('assets/pikachu.png'),
+                          ),
                         ),
-                        ListText(
-                          text: 'INGENIERIA DE\nSISTEMAS',
+                      ),
+                      Expanded(
+                        child: Container(
                           color: Palette.white,
-                          fontSize: 20,
-                          fontbold: true,
+                          child: ListView(
+                            children: [
+                              ListTile(
+                                onTap: () {
+                                  Get.toNamed("/labs");
+                                },
+                                title: const Texts.bold(
+                                  "Laboratorios",
+                                  color: Palette.kPrimary,
+                                ),
+                                leading: const Icon(Icons.add_box),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                    leading: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('assets/pikachu.png'),
-                    ),
+                      ),
+                      Image.asset('assets/ucv.png')
+                    ],
                   ),
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.only(top: 150, left: 90, bottom: 150),
-                  color: Palette.white,
-                ),
-                Image.asset('assets/ucv.png')
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            )
+          : null,
       appBar: AppBar(
         backgroundColor: Palette.kPrimary,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              color: Palette.white,
-              iconSize: 30,
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        title: const Text(
-          'Hola, Cris',
-          style: TextStyle(
-            color: Palette.white,
-          ),
+        leading: controller.authController.isTeacher()
+            ? Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: const Icon(Icons.menu),
+                    color: Palette.white,
+                    iconSize: 30,
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  );
+                },
+              )
+            : const SizedBox.shrink(),
+        title: Texts.regular(
+          'Hola, ${controller.authController.user.name}',
+          fontSize: 14,
+          color: Palette.white,
         ),
         centerTitle: true,
       ),
