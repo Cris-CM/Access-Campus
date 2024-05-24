@@ -13,74 +13,81 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: controller.authController.isTeacher()
-          ? SizedBox(
-              width: MediaQuery.of(context).size.width * 0.80,
-              child: Drawer(
-                backgroundColor: Palette.kPrimary,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 50,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 1.h, bottom: 3.h),
-                        color: Palette.kPrimary,
-                        child: ListTile(
-                          title: Texts.bold(
-                            "Bienvenido, ${controller.authController.user.name}",
-                            color: Palette.white,
-                            fontSize: 13,
-                          ),
-                          leading: const CircleAvatar(
-                            radius: 40,
-                            backgroundImage: AssetImage('assets/pikachu.png'),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: Palette.white,
-                          child: ListView(
-                            children: [
-                              ListTile(
-                                onTap: () {
-                                  Get.toNamed("/labs");
-                                },
-                                title: const Texts.bold(
-                                  "Laboratorios",
-                                  color: Palette.kPrimary,
-                                ),
-                                leading: const Icon(Icons.add_box),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Image.asset('assets/ucv.png')
-                    ],
+      drawer: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.80,
+        child: Drawer(
+          backgroundColor: Palette.kPrimary,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 50,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 1.h, bottom: 3.h),
+                  color: Palette.kPrimary,
+                  child: ListTile(
+                    title: Texts.bold(
+                      "Bienvenido, ${controller.authController.user.name}",
+                      color: Palette.white,
+                      fontSize: 13,
+                    ),
+                    leading: const CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/pikachu.png'),
+                    ),
                   ),
                 ),
-              ),
-            )
-          : null,
+                Expanded(
+                  child: Container(
+                    color: Palette.white,
+                    child: ListView(
+                      children: [
+                        if (controller.authController.isTeacher())
+                          ListTile(
+                            onTap: () {
+                              Get.toNamed("/labs");
+                            },
+                            title: const Texts.bold(
+                              "Laboratorios",
+                              color: Palette.kPrimary,
+                            ),
+                            leading: const Icon(Icons.add_box),
+                          ),
+                        ListTile(
+                          onTap: () {
+                            Get.toNamed("/login");
+                          },
+                          title: const Texts.bold(
+                            "Cerrar Sesion",
+                            color: Palette.kPrimary,
+                          ),
+                          leading: const Icon(Icons.logout),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Image.asset('assets/ucv.png')
+              ],
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Palette.kPrimary,
-        leading: controller.authController.isTeacher()
-            ? Builder(
-                builder: (BuildContext context) {
-                  return IconButton(
-                    icon: const Icon(Icons.menu),
-                    color: Palette.white,
-                    iconSize: 30,
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  );
-                },
-              )
-            : const SizedBox.shrink(),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              color: Palette.white,
+              iconSize: 30,
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
         title: Texts.regular(
           'Hola, ${controller.authController.user.name}',
           fontSize: 14,

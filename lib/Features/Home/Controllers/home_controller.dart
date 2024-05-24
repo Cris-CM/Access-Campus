@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
@@ -19,7 +20,6 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
- 
   @override
   void dispose() {
     controller!.dispose();
@@ -54,18 +54,22 @@ class HomeController extends GetxController {
   void onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
     await controller.pauseCamera();
-    //  await controller.resumeCamera();
 
-    await sendEntry(1);
-    // controller.scannedDataStream.listen((scanData) async {
-    //   controller.pauseCamera();
-    //   await sendEntry(1);
-    // if (scanData.format == BarcodeFormat.qrcode &&
-    //     scanData.code!.isNotEmpty) {
-    //   controller.pauseCamera();
-    //   await sendEntry(int.parse(scanData.code ?? "0"));
-    // }
-    //  });
+    //if (kDebugMode) {
+      //await sendEntry(1);
+    //} else {
+      await controller.resumeCamera();
+
+      controller.scannedDataStream.listen((scanData) async {
+        controller.pauseCamera();
+        await sendEntry(1);
+        if (scanData.format == BarcodeFormat.qrcode &&
+            scanData.code!.isNotEmpty) {
+          controller.pauseCamera();
+          await sendEntry(int.parse(scanData.code ?? "0"));
+        }
+      });
+    //}
   }
 
   Future<void> sendEntry(int classId) async {
@@ -83,7 +87,7 @@ class HomeController extends GetxController {
       }
 
       await getClasses();
-       Util.successSnackBar(response.data["data"]);
+      Util.successSnackBar(response.data["data"]);
     } on DioException catch (e) {
       Util.errorSnackBar(e.response!.data["data"]);
     } catch (e) {

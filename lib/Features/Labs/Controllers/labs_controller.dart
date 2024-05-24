@@ -6,6 +6,12 @@ import 'package:qr_tracker/core/network/dio_config.dart';
 import 'package:qr_tracker/core/widgets/util.dart';
 
 class LabsController extends GetxController {
+  @override
+  void onInit() {
+    getClasses();
+    super.onInit();
+  }
+
   final classesList = <ClassesModel>[].obs;
   final loading = false.obs;
   final authController = Get.find<AuthController>();

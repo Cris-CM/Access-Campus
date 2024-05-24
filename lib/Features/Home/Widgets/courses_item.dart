@@ -95,7 +95,7 @@ class CoursesItem extends StatelessWidget {
           ),
         ),
       ],
-    ).marginSymmetric(horizontal: 3.w);
+    ).marginSymmetric(horizontal: 3.w,vertical: 2.h);
   }
 
   isOpen() {
