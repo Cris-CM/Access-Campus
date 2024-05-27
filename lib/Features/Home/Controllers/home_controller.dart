@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
@@ -56,19 +55,19 @@ class HomeController extends GetxController {
     await controller.pauseCamera();
 
     //if (kDebugMode) {
-      //await sendEntry(1);
+    //await sendEntry(1);
     //} else {
-      await controller.resumeCamera();
+    await controller.resumeCamera();
 
-      controller.scannedDataStream.listen((scanData) async {
+    controller.scannedDataStream.listen((scanData) async {
+      controller.pauseCamera();
+      await sendEntry(1);
+      if (scanData.format == BarcodeFormat.qrcode &&
+          scanData.code!.isNotEmpty) {
         controller.pauseCamera();
-        await sendEntry(1);
-        if (scanData.format == BarcodeFormat.qrcode &&
-            scanData.code!.isNotEmpty) {
-          controller.pauseCamera();
-          await sendEntry(int.parse(scanData.code ?? "0"));
-        }
-      });
+        await sendEntry(int.parse(scanData.code ?? "0"));
+      }
+    });
     //}
   }
 

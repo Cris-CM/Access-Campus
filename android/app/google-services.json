@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77605210564",
+    "project_id": "accesscampus-93efc",
+    "storage_bucket": "accesscampus-93efc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77605210564:android:2a79caf72362850b7bbc91",
+        "android_client_info": {
+          "package_name": "com.example.qr_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8-ICtv56vxy8uGOQ5XmBbBBGblK0Jc74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
