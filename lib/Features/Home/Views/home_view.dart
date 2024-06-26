@@ -97,12 +97,26 @@ class HomeView extends GetView<HomeController> {
             );
           },
         ),
-        title: Texts.regular(
-          'Hola, ${controller.authController.user.name}',
-          fontSize: 14,
-          color: Palette.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Texts.regular(
+              'Hola, ${controller.authController.user.name}',
+              fontSize: 14,
+              color: Palette.white,
+            ),
+            IconButton(
+              onPressed: () {
+                Get.toNamed('chatbot');
+              },
+              icon: Icon(
+                Icons.message,
+                color: Palette.white,
+                size: 7.w,
+              ),
+            ),
+          ],
         ),
-        centerTitle: true,
       ),
       body: Obx(() {
         if (controller.loading()) {
