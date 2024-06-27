@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/core/widgets/texts.dart';
+import 'package:sizer/sizer.dart';
+
 class ChatbotView extends StatefulWidget {
+  const ChatbotView({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChatbotViewState createState() => _ChatbotViewState();
 }
 
@@ -58,19 +65,27 @@ class _ChatbotViewState extends State<ChatbotView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chatbot'),
+        backgroundColor: Palette.kPrimary,
+        iconTheme: IconThemeData(
+          color: Palette.white,
+          size: 3.h,
+        ),
+        title: const Texts.bold(
+          "ChatBot",
+          fontSize: 12,
+          color: Palette.white,
+        ),
       ),
       body: Column(
-        children: <Widget>[
+        children: [
           Flexible(
             child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               itemCount: messages.length,
               itemBuilder: (_, index) => messages[index],
-              reverse: true, // Mostrar mensajes desde abajo hacia arriba
+              reverse: true,
             ),
           ),
-          Divider(height: 1.0),
           Container(
             decoration: BoxDecoration(color: Theme.of(context).cardColor),
             child: _buildTextComposer(),
@@ -82,24 +97,26 @@ class _ChatbotViewState extends State<ChatbotView> {
 
   Widget _buildTextComposer() {
     return IconTheme(
-      data: IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      data: const IconThemeData(color: Palette.black),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.only(left: 20),
         child: Row(
-          children: <Widget>[
+          children: [
             Flexible(
               child: TextField(
                 controller: _controller,
-                decoration: InputDecoration.collapsed(
+                decoration: const InputDecoration.collapsed(
                   hintText: 'Enviar mensaje',
                 ),
                 onSubmitted: _handleSubmitted,
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
-                icon: Icon(Icons.send),
+                icon: const Icon(
+                  Icons.send,
+                ),
                 onPressed: () {
                   _handleSubmitted(_controller.text);
                 },
@@ -201,36 +218,40 @@ class ChatMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUser = sender == 'user';
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
       child: Row(
         mainAxisAlignment:
             isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           if (!isUser) // Si no es el usuario, mostrar avatar del bot
             Container(
-              margin: EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(child: Text('Bot')),
+              margin: const EdgeInsets.only(right: 8.0),
+              child: const CircleAvatar(child: Text('Bot')),
             ),
           Flexible(
             child: Container(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                color: isUser
-                    ? Theme.of(context).colorScheme.secondary
-                    : Colors.grey[300],
+                color: isUser ? Palette.grey400 : Palette.grey200,
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: Text(
+              child: Texts.regular(
                 text,
-                style: TextStyle(color: isUser ? Colors.white : Colors.black),
+                fontSize: 8,
+                style: TextStyle(
+                  color: isUser ? Palette.white : Palette.blue,
+                ),
               ),
             ),
           ),
           if (isUser) // Si es el usuario, mostrar avatar del usuario
             Container(
-              margin: EdgeInsets.only(left: 8.0),
-              child: CircleAvatar(child: Text('U')),
+              margin: const EdgeInsets.only(left: 8.0),
+              child: const CircleAvatar(
+                radius: 27,
+                backgroundImage: AssetImage('assets/pikachu.png'),
+              ),
             ),
         ],
       ),
