@@ -137,6 +137,7 @@ class HomeView extends GetView<HomeController> {
                   CustomButton(
                     onPressed: () => _selectDateTime(context),
                     text: 'Selecione Fecha y Hora',
+                  ).marginOnly(right: 17.w),
                   Obx(
                     () {
                       final selectedStartDateTime =
