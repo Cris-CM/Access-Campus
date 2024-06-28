@@ -30,7 +30,7 @@ final getRouter = <GetPage>[
   ),
   GetPage(
     name: "/chatbot",
-    page: () => ChatbotView(),
+    page: () => const ChatbotView(),
     binding: AuthBinding(),
   ),
 ];

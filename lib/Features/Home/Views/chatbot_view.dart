@@ -212,7 +212,7 @@ class ChatMessage extends StatelessWidget {
   final String text;
   final String sender;
 
-  ChatMessage({required this.text, required this.sender});
+  const ChatMessage({super.key, required this.text, required this.sender});
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_controller.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/core/widgets/circular_loading.dart';
+import 'package:qr_tracker/core/widgets/custom_button.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:qr_tracker/Features/Home/Widgets/courses_item.dart';
 import 'package:sizer/sizer.dart';
@@ -130,6 +131,29 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                    onPressed: () => _selectDateTime(context),
+                    text: 'Selecione Fecha y Hora',
+                  Obx(
+                    () {
+                      final selectedStartDateTime =
+                          controller.selectedStartDateTime.value;
+                      final selectedEndDateTime =
+                          controller.selectedEndDateTime.value;
+                      return selectedStartDateTime != null &&
+                              selectedEndDateTime != null
+                          ? Texts.regular(
+                              "Dia: ${selectedStartDateTime.day}/${selectedStartDateTime.month}/${selectedStartDateTime.year}\nInicia: ${selectedStartDateTime.hour}:${selectedStartDateTime.minute}\nTermina: ${selectedEndDateTime.hour}:${selectedEndDateTime.minute}",
+                              color: Palette.black,
+                            )
+                          : Container();
+                    },
+                  ),
+                ],
+              ).marginOnly(top: 2.h, bottom: 1.h),
               const Texts.bold(
                 "LABORATORIOS:",
                 fontSize: 15,
@@ -161,5 +185,118 @@ class HomeView extends GetView<HomeController> {
         );
       }),
     );
+  }
+
+  Future _selectDateTime(BuildContext context) async {
+    DateTime? selectedDate;
+    TimeOfDay? selectedStartTime;
+    TimeOfDay? selectedEndTime;
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2030),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary:
+                  Palette.kPrimary, // Color primario para botones y selección
+              onPrimary:
+                  Colors.white, // Color del texto en el botón de selección
+            ),
+            buttonTheme: const ButtonThemeData(
+              textTheme: ButtonTextTheme
+                  .primary, // Establecer el texto en color primario
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+      selectedDate = pickedDate;
+
+      final TimeOfDay? pickedStartTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary:
+                    Palette.kPrimary, // Color primario para botones y selección
+                onPrimary:
+                    Colors.white, // Color del texto en el botón de selección
+              ),
+              buttonTheme: const ButtonThemeData(
+                textTheme: ButtonTextTheme
+                    .primary, // Establecer el texto en color primario
+              ),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      if (pickedStartTime != null) {
+        selectedStartTime = pickedStartTime;
+
+        final TimeOfDay? pickedEndTime = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: Palette
+                      .kPrimary, // Color primario para botones y selección
+                  onPrimary:
+                      Palette.white, // Color del texto en el botón de selección
+                ),
+                buttonTheme: const ButtonThemeData(
+                  textTheme: ButtonTextTheme
+                      .primary, // Establecer el texto en color primario
+                ),
+              ),
+              child: child!,
+            );
+          },
+        );
+
+        if (pickedEndTime != null) {
+          selectedEndTime = pickedEndTime;
+        }
+      }
+    }
+
+    if (selectedDate != null &&
+        selectedStartTime != null &&
+        selectedEndTime != null) {
+      final selectedStartDateTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedStartTime.hour,
+        selectedStartTime.minute,
+      );
+
+      final selectedEndDateTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedEndTime.hour,
+        selectedEndTime.minute,
+      );
+
+      // Actualizar el valor en el controlador y mostrar en la consola
+      controller.selectedStartDateTime.value = selectedStartDateTime;
+      controller.selectedEndDateTime.value = selectedEndDateTime;
+      print(
+        "Laboratorio empieza el ${selectedStartDateTime.day}/${selectedStartDateTime.month}/${selectedStartDateTime.year} a las ${selectedStartDateTime.hour}:${selectedStartDateTime.minute} - Termina a las ${selectedEndDateTime.hour}:${selectedEndDateTime.minute}",
+      );
+    }
   }
 }

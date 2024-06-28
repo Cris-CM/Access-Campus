@@ -12,6 +12,8 @@ class HomeController extends GetxController {
   final authController = Get.find<AuthController>();
   final loading = false.obs;
   final classesList = <ClassesModel>[].obs;
+  var selectedStartDateTime = Rxn<DateTime>();
+  var selectedEndDateTime = Rxn<DateTime>();
 
   @override
   void onInit() {
