@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_controller.dart';
@@ -184,6 +183,25 @@ class HomeView extends GetView<HomeController> {
           ),
         );
       }),
+      floatingActionButton: SizedBox(
+        width: 13.w,
+        height: 7.h,
+        child: ClipOval(
+          child: FloatingActionButton(
+            backgroundColor: Palette.blue,
+            elevation: 0,
+            onPressed: () {
+              Get.toNamed('chatbot');
+            },
+            child: const Icon(
+              Icons.chat,
+              size: 40.0,
+              color: Palette.white,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
     );
   }
 
