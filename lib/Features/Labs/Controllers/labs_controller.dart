@@ -17,27 +17,27 @@ class LabsController extends GetxController {
   final authController = Get.find<AuthController>();
 
   Future<void> getClasses() async {
-    classesList.clear();
-    try {
-      loading(true);
-      final response = await dio.get("classes/${authController.user.id}");
+    // classesList.clear();
+    // try {
+    //   loading(true);
+    //   final response = await dio.get("classes/${authController.user.id}");
 
-      if (response.statusCode != 200) {
-        throw response.data["data"];
-      }
+    //   if (response.statusCode != 200) {
+    //     throw response.data["data"];
+    //   }
 
-      final classes = (response.data["data"] as List)
-          .map(
-            (e) => ClassesModel.fromJson(e),
-          )
-          .toList();
-      classesList.addAll(classes);
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
-    } catch (e) {
-      Util.errorSnackBar(e.toString());
-    } finally {
-      loading(false);
-    }
+    //   final classes = (response.data["data"] as List)
+    //       .map(
+    //         (e) => ClassesModel.fromJson(e),
+    //       )
+    //       .toList();
+    //   classesList.addAll(classes);
+    // } on DioException catch (e) {
+    //   Util.errorSnackBar(e.response!.data["data"]);
+    // } catch (e) {
+    //   Util.errorSnackBar(e.toString());
+    // } finally {
+    //   loading(false);
+    // }
   }
 }

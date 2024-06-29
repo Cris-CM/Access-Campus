@@ -14,14 +14,6 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final RemoteMessage? message =
-        ModalRoute.of(context)?.settings.arguments as RemoteMessage?;
-
-    if (message != null) {
-      // Manejar datos de la notificación si es necesario
-      print(
-          "Datos de la notificación: ${message.notification?.title}, ${message.notification?.body}");
-    }
     return Scaffold(
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.80,
@@ -38,13 +30,9 @@ class HomeView extends GetView<HomeController> {
                   color: Palette.kPrimary,
                   child: ListTile(
                     title: Texts.bold(
-                      "Bienvenido, ${controller.authController.user.name}",
+                      "Bienvenido,\n${controller.authController.userModel.lstItem.first.cPerNombre}",
                       color: Palette.white,
                       fontSize: 13,
-                    ),
-                    leading: const CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('assets/pikachu.png'),
                     ),
                   ),
                 ),
@@ -53,7 +41,7 @@ class HomeView extends GetView<HomeController> {
                     color: Palette.white,
                     child: ListView(
                       children: [
-                        if (controller.authController.isTeacher())
+                        if (controller.authController.userModel.isTeacher())
                           ListTile(
                             onTap: () {
                               Get.toNamed("/labs");
@@ -98,25 +86,10 @@ class HomeView extends GetView<HomeController> {
             );
           },
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Texts.regular(
-              'Hola, ${controller.authController.user.name}',
-              fontSize: 14,
-              color: Palette.white,
-            ),
-            IconButton(
-              onPressed: () {
-                Get.toNamed('chatbot');
-              },
-              icon: Icon(
-                Icons.message,
-                color: Palette.white,
-                size: 7.w,
-              ),
-            ),
-          ],
+        title: Texts.regular(
+          'Hola, ${controller.authController.userModel.lstItem.first.cPerNombre}',
+          fontSize: 14,
+          color: Palette.white,
         ),
       ),
       body: Obx(() {
@@ -174,8 +147,34 @@ class HomeView extends GetView<HomeController> {
                   itemBuilder: (BuildContext context, int index) {
                     return CoursesItem(
                       classes: controller.classesList[index],
+                      isUser: controller.authController.userModel.isUser(),
                       onPressed: () {
-                        Get.toNamed("/qrscan");
+                        if (controller.authController.userModel.isUser()) {
+                          Get.toNamed("/qrscan");
+                        } else {
+                          Get.defaultDialog(
+                            title: "Editar Laboratorio",
+                            content: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    final time = await showTimePicker(
+                                      context: context,
+                                      initialTime:
+                                          TimeOfDay(hour: 0, minute: 0),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 4.h,
+                                    child:
+                                        Texts.bold(DateTime.now().toString()),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       },
                     );
                   },

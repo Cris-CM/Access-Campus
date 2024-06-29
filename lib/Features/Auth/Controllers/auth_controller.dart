@@ -1,40 +1,57 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/Features/Auth/Models/user_model.dart';
+import 'package:qr_tracker/core/models/user_model.dart';
+import 'package:qr_tracker/core/models/user_short_model.dart';
 import 'package:qr_tracker/core/network/dio_config.dart';
+import 'package:qr_tracker/core/statics/urls.dart';
 import 'package:qr_tracker/core/widgets/util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      login(Get.arguments);
+    }
+    super.onInit();
+  }
+
   final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
   final loginKey = GlobalKey<FormState>();
-  late UserModel user;
   final loading = false.obs;
+  late UserModel userModel;
+  late UserShort userShort;
 
-  bool isTeacher() => user.rol == 2;
-
-  Future<void> login() async {
-    if (!loginKey.currentState!.validate()) return;
-
+  Future<void> login(String user) async {
     final data = {
-      "Username": usernameController.text,
-      "Password": int.tryParse(passwordController.text) ?? 0,
+      "cPerCodigo": user,
     };
-
     try {
       loading(true);
-      final response = await dio.post("auth/login", data: data);
+      final response = await dio.post(Url.obtenerPersona, data: data);
 
       if (response.statusCode != 200) {
         throw response.data["data"];
       }
 
-      user = UserModel.fromJson(response.data["data"]);
+      if (response.data["item"] == null) {
+        throw "Usuario invalido";
+      }
+
+      userShort = UserShort.fromJson(response.data);
+
+      final responseUser = await dio.post(
+        Url.obtenerDatosPersonales,
+        data: data,
+      );
+
+      userModel = UserModel.fromJson(responseUser.data);
+
+      var sp = await SharedPreferences.getInstance();
+
+      await sp.setString("userKey", user);
 
       Get.toNamed("/home");
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
@@ -28,28 +29,28 @@ class HomeController extends GetxController {
   }
 
   Future<void> getClasses() async {
-    classesList.clear();
-    try {
-      loading(true);
-      final response = await dio.get("classes/${authController.user.id}");
+    // classesList.clear();
+    // try {
+    //   loading(true);
+    //   final response = await dio.get("classes/${authController.user.id}");
 
-      if (response.statusCode != 200) {
-        throw response.data["data"];
-      }
+    //   if (response.statusCode != 200) {
+    //     throw response.data["data"];
+    //   }
 
-      final classes = (response.data["data"] as List)
-          .map(
-            (e) => ClassesModel.fromJson(e),
-          )
-          .toList();
-      classesList.addAll(classes);
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
-    } catch (e) {
-      Util.errorSnackBar(e.toString());
-    } finally {
-      loading(false);
-    }
+    //   final classes = (response.data["data"] as List)
+    //       .map(
+    //         (e) => ClassesModel.fromJson(e),
+    //       )
+    //       .toList();
+    //   classesList.addAll(classes);
+    // } on DioException catch (e) {
+    //   Util.errorSnackBar(e.response!.data["data"]);
+    // } catch (e) {
+    //   Util.errorSnackBar(e.toString());
+    // } finally {
+    //   loading(false);
+    // }
   }
 
   void onQRViewCreated(QRViewController controller) async {
@@ -74,28 +75,33 @@ class HomeController extends GetxController {
   }
 
   Future<void> sendEntry(int classId) async {
-    try {
-      loading(true);
-      final data = {
-        "UserId": authController.user.id,
-        "ClassId": classId,
-      };
+    // try {
+    //   loading(true);
+    //   final data = {
+    //     "UserId": authController.user.id,
+    //     "ClassId": classId,
+    //   };
 
-      final response = await dio.post("entries/register", data: data);
+    //   final response = await dio.post("entries/register", data: data);
 
-      if (response.statusCode != 200) {
-        throw response.data["data"];
-      }
+    //   if (response.statusCode != 200) {
+    //     throw response.data["data"];
+    //   }
 
-      await getClasses();
-      Util.successSnackBar(response.data["data"]);
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
-    } catch (e) {
-      Util.errorSnackBar(e.toString());
-    } finally {
-      Get.toNamed("/home");
-      loading(false);
-    }
+    //   await getClasses();
+    //   Util.successSnackBar(response.data["data"]);
+    // } on DioException catch (e) {
+    //   Util.errorSnackBar(e.response!.data["data"]);
+    // } catch (e) {
+    //   Util.errorSnackBar(e.toString());
+    // } finally {
+    //   Get.toNamed("/home");
+    //   loading(false);
+    // }
+  }
+
+
+  Future<void> saveTimeEntryClass(TimeOfDay timeOfDay)async{
+    
   }
 }

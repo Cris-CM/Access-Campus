@@ -10,10 +10,11 @@ class CoursesItem extends StatelessWidget {
     super.key,
     required this.classes,
     required this.onPressed,
+    required this.isUser,
   });
   final ClassesModel classes;
   final Function() onPressed;
-
+  final bool isUser;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -86,8 +87,8 @@ class CoursesItem extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: onPressed,
-              icon: const Icon(
-                Icons.qr_code_scanner,
+              icon: Icon(
+                isUser ? Icons.qr_code_scanner : Icons.edit,
                 color: Palette.black,
                 size: 30,
               ),
@@ -95,7 +96,7 @@ class CoursesItem extends StatelessWidget {
           ),
         ),
       ],
-    ).marginSymmetric(horizontal: 3.w,vertical: 2.h);
+    ).marginSymmetric(horizontal: 3.w, vertical: 2.h);
   }
 
   isOpen() {

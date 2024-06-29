@@ -7,8 +7,13 @@ import 'package:qr_tracker/Features/Home/Views/home_view.dart';
 import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
 import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
 import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
+import 'package:qr_tracker/Features/Splash/splash_view.dart';
 
 final getRouter = <GetPage>[
+  GetPage(
+    name: "/splash",
+    page: () => const SplashView(),
+  ),
   GetPage(
     name: "/login",
     page: () => const LoginView(),

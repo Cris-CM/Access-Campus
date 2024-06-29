@@ -41,6 +41,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   firebase_core: ^2.31.1
   firebase_messaging: ^14.9.3
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

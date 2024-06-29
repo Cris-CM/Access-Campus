@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           navigatorKey: navigatorKey,
           title: 'Access Campus',
-          initialRoute: "/login",
+          initialRoute: "/splash",
           getPages: getRouter,
           debugShowCheckedModeBanner: false,
         );
