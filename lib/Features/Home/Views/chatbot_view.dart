@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
+import 'package:qr_tracker/core/widgets/loading_indicator.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,6 +21,7 @@ class _ChatbotViewState extends State<ChatbotView> {
     model: 'gemini-1.5-flash-latest',
     apiKey: apiKey,
   );
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,13 @@ class _ChatbotViewState extends State<ChatbotView> {
           Flexible(
             child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
-              itemCount: messages.length,
-              itemBuilder: (_, index) => messages[index],
+              itemCount: messages.length + (isLoading ? 1 : 0),
+              itemBuilder: (_, index) {
+                if (isLoading && index == 0) {
+                  return const LoadingIndicator();
+                }
+                return messages[isLoading ? index - 1 : index];
+              },
               reverse: true,
             ),
           ),
@@ -93,22 +100,23 @@ class _ChatbotViewState extends State<ChatbotView> {
     ChatMessage message = ChatMessage(text: text, sender: 'user');
     setState(() {
       messages.insert(0, message);
+      isLoading = true;
     });
 
     _resolveDoubt(text);
   }
 
   void _resolveDoubt(String question) async {
-    final extra = 'dimelo en una oracion';
+    const extra = 'Responde de manera breve: ';
 
     final content = [Content.text(extra + question)];
     final response = await model.generateContent(content);
 
-    String reply = response.text ??
-        'Lo siento, no entendí la pregunta. ¿Podrías ser más específico?';
+    String reply = response.text ?? '';
     ChatMessage botReply = ChatMessage(text: reply, sender: 'bot');
     setState(() {
       messages.insert(0, botReply);
+      isLoading = false;
     });
   }
 }
