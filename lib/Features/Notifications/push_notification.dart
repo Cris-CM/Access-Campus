@@ -1,42 +1,57 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../main.dart';
 
 class PushNotifications {
-  static final FirebaseMessaging _firebaseMessaging =
-      FirebaseMessaging.instance;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  static Future<void> init() async {
-    // Solicitar permisos
-    await _firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+  static void init() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-    // Obtener el token de registro
-    final token = await _firebaseMessaging.getToken();
-    print('Device token: $token');
-
-    // Configurar el manejo de mensajes en primer plano
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         print(
-            "Mensaje recibido: ${message.notification!.title}, ${message.notification!.body}");
+            "Mensaje recibido en primer plano: ${message.notification!.title}, ${message.notification!.body}");
+        _showNotification(message);
       }
     });
 
-    // Configurar el manejo de mensajes cuando la app está en segundo plano y se toca la notificación
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         print('Notificación en segundo plano tocada');
-        // Navegar a la página HomeView cuando se toca la notificación
         navigatorKey.currentState?.pushNamed('/home', arguments: message);
       }
     });
+  }
+
+  static void _showNotification(RemoteMessage message) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'your channel id', // ID del canal de notificación
+      'your channel name', // Nombre del canal de notificación
+      importance: Importance.max,
+      priority: Priority.high,
+      playSound: true,
+      enableVibration: true,
+      showWhen: false,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0, // ID de la notificación (puedes usar un contador o algo similar)
+      message.notification!.title, // Título de la notificación
+      message.notification!.body, // Cuerpo de la notificación
+      platformChannelSpecifics, // Argumento esperado
+      payload: message.data
+          .toString(), // Opcional: datos adicionales de la notificación
+    );
   }
 }
