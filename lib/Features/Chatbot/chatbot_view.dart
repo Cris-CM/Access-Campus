@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/core/widgets/loading_indicator.dart';
+import 'package:qr_tracker/Features/Chatbot/loading_indicator.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
