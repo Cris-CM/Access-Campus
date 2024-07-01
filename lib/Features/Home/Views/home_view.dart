@@ -104,7 +104,6 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomButton(
                     onPressed: () => _selectDateTime(context),
@@ -126,7 +125,7 @@ class HomeView extends GetView<HomeController> {
                     },
                   ),
                 ],
-              ).marginOnly(top: 2.h, bottom: 1.h),
+              ).marginAll(10.sp),
               const Texts.bold(
                 "LABORATORIOS:",
                 fontSize: 15,
@@ -156,14 +155,8 @@ class HomeView extends GetView<HomeController> {
                             content: Column(
                               children: [
                                 GestureDetector(
-                                  onTap: () async {
-                                    final time = await showTimePicker(
-                                      context: context,
-                                      initialTime:
-                                          TimeOfDay(hour: 0, minute: 0),
-                                    );
-                                  },
-                                  child: Container(
+                                  onTap: () async {},
+                                  child: SizedBox(
                                     width: double.infinity,
                                     height: 4.h,
                                     child:
