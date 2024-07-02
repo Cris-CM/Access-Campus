@@ -51,7 +51,8 @@ class UserShort {
         resultado: json["resultado"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() {
+    return {
         "item": item.toJson(),
         "isSuccess": isSuccess,
         "lstError": List<dynamic>.from(lstError.map((x) => x)),
@@ -61,6 +62,7 @@ class UserShort {
         "serverName": serverName,
         "resultado": resultado,
       };
+  }
 }
 
 class Item {

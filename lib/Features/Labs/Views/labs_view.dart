@@ -42,10 +42,9 @@ class LabsView extends GetView<LabsController> {
               );
             },
             scrollDirection: Axis.vertical,
-            itemCount: controller.classesList.length,
+            itemCount: 0,
             itemBuilder: (BuildContext context, int index) {
               return LabsItem(
-                classes: controller.classesList[index],
                 onPressed: () {
                   Get.toNamed("/qrscan");
                 },

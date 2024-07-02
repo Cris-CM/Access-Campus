@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/Features/Home/Models/classes_model.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:sizer/sizer.dart';
@@ -8,10 +7,8 @@ import 'package:sizer/sizer.dart';
 class LabsItem extends StatelessWidget {
   const LabsItem({
     super.key,
-    required this.classes,
     required this.onPressed,
   });
-  final ClassesModel classes;
   final Function() onPressed;
 
   @override
@@ -42,11 +39,6 @@ class LabsItem extends StatelessWidget {
                   color: Palette.red,
                   alignment: TextAlign.center,
                 ).marginOnly(bottom: 1.h),
-                Texts.bold(
-                  classes.pavilion + classes.number,
-                  color: Palette.kPrimary,
-                  fontSize: 15,
-                ),
               ],
             ),
           ),
@@ -54,32 +46,10 @@ class LabsItem extends StatelessWidget {
         Expanded(
           flex: 6,
           child: Column(
-            children: [
-              Texts.bold(
-                classes.name,
-                fontSize: 14,
-                color: Palette.kPrimary,
-                alignment: TextAlign.center,
-              ).marginOnly(bottom: 1.h),
-              Texts.bold(
-                isOpen() ? "Abierto" : "Cerrado",
-                color: isOpen() ? Colors.green : Palette.red,
-                fontSize: 15,
-              ),
-            ],
+            children: [],
           ),
         ),
-        
       ],
-    ).marginSymmetric(horizontal: 3.w,vertical: 2.h);
-  }
-
-  isOpen() {
-    final date = DateTime.now();
-    if (date.isAfter(classes.entryDate) && date.isBefore(classes.exitDate)) {
-      return true;
-    }
-
-    return false;
+    ).marginSymmetric(horizontal: 3.w, vertical: 2.h);
   }
 }

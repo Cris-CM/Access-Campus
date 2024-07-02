@@ -26,3 +26,8 @@ extension TipoMatriculaExtension on TipoMatricula {
     }
   }
 }
+
+
+const keyTypePlan = "type-plan";
+const keyPlan = "plan";
+const keyPeriod = "period";

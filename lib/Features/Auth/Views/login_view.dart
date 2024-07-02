@@ -9,7 +9,8 @@ import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginView extends GetView<AuthController> {
-  const LoginView({super.key});
+  LoginView({super.key});
+  final loginKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class LoginView extends GetView<AuthController> {
                   color: Palette.white,
                 ),
                 child: Form(
-                  key: controller.loginKey,
+                  key: loginKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,7 +71,7 @@ class LoginView extends GetView<AuthController> {
                         alignment: Alignment.center,
                         child: CustomButton(
                           onPressed: () async {
-                            if (!controller.loginKey.currentState!.validate()) {
+                            if (!loginKey.currentState!.validate()) {
                               return;
                             }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qr_tracker/core/models/bearer_token_model.dart';
 import 'package:qr_tracker/core/models/user_model.dart';
 import 'package:qr_tracker/core/models/user_short_model.dart';
 import 'package:qr_tracker/core/network/dio_config.dart';
+import 'package:qr_tracker/core/statics/const.dart';
 import 'package:qr_tracker/core/statics/urls.dart';
 import 'package:qr_tracker/core/widgets/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,11 +18,11 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  final usernameController = TextEditingController();
-  final loginKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController(text: "7002539160");
   final loading = false.obs;
   late UserModel userModel;
   late UserShort userShort;
+  late BearerTokenModel bearerTokenModel;
 
   Future<void> login(String user) async {
     final data = {
@@ -50,12 +52,26 @@ class AuthController extends GetxController {
       var sp = await SharedPreferences.getInstance();
 
       await sp.setString("userKey", user);
+      await getBearerToken();
 
-      Get.toNamed("/home");
+      if (sp.get(keyTypePlan) == null || sp.get(keyPlan) == null) {
+        Get.toNamed("/typePlan");
+      } else {
+        Get.toNamed("/home");
+      }
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {
       loading(false);
     }
+  }
+
+  Future<void> getBearerToken() async {
+    try {
+      final response = await dio.post(Url.obtenerBearerToken);
+
+      bearerTokenModel = BearerTokenModel.fromJson(response.data);
+      
+    } catch (e) {}
   }
 }

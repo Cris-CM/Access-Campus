@@ -6,6 +6,7 @@ import 'package:qr_tracker/core/widgets/circular_loading.dart';
 import 'package:qr_tracker/core/widgets/custom_button.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:qr_tracker/Features/Home/Widgets/courses_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -52,7 +53,9 @@ class HomeView extends GetView<HomeController> {
                             leading: const Icon(Icons.add_box),
                           ),
                         ListTile(
-                          onTap: () {
+                          onTap: () async {
+                            final sp = await SharedPreferences.getInstance();
+                            await sp.clear();
                             Get.toNamed("/login");
                           },
                           title: const Texts.bold(
@@ -141,32 +144,17 @@ class HomeView extends GetView<HomeController> {
                     );
                   },
                   scrollDirection: Axis.vertical,
-                  itemCount: controller.classesList.length,
+                  itemCount: controller.curseModel.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CoursesItem(
-                      classes: controller.classesList[index],
+                      classes: controller.curseModel[index],
                       isUser: controller.authController.userModel.isUser(),
                       onPressed: () {
-                        if (controller.authController.userModel.isUser()) {
-                          Get.toNamed("/qrscan");
-                        } else {
-                          Get.defaultDialog(
-                            title: "Editar Laboratorio",
-                            content: Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {},
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    height: 4.h,
-                                    child:
-                                        Texts.bold(DateTime.now().toString()),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                        Get.toNamed(
+                          "/curse",
+                          arguments: controller.curseModel[index].ncurgrucodigo
+                              .toString(),
+                        );
                       },
                     );
                   },
