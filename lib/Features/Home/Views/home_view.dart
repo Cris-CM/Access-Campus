@@ -106,31 +106,9 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  CustomButton(
-                    onPressed: () => _selectDateTime(context),
-                    text: 'Selecione Fecha y Hora',
-                  ).marginOnly(right: 17.w),
-                  Obx(
-                    () {
-                      final selectedStartDateTime =
-                          controller.selectedStartDateTime.value;
-                      final selectedEndDateTime =
-                          controller.selectedEndDateTime.value;
-                      return selectedStartDateTime != null &&
-                              selectedEndDateTime != null
-                          ? Texts.regular(
-                              "Dia: ${selectedStartDateTime.day}/${selectedStartDateTime.month}/${selectedStartDateTime.year}\nInicia: ${selectedStartDateTime.hour}:${selectedStartDateTime.minute}\nTermina: ${selectedEndDateTime.hour}:${selectedEndDateTime.minute}",
-                              color: Palette.black,
-                            )
-                          : Container();
-                    },
-                  ),
-                ],
-              ).marginAll(10.sp),
+              
               const Texts.bold(
-                "LABORATORIOS:",
+                "CURSOS:",
                 fontSize: 15,
                 color: Palette.kPrimary,
               ).marginAll(4.w),

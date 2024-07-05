@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
 import 'package:qr_tracker/core/models/curse_model.dart';
 import 'package:qr_tracker/core/network/dio_config.dart';
@@ -9,8 +7,6 @@ import 'package:qr_tracker/core/statics/urls.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
-  QRViewController? controller;
-  Barcode? result;
   final authController = Get.find<AuthController>();
   final loading = false.obs;
   var selectedStartDateTime = Rxn<DateTime>();
@@ -21,12 +17,6 @@ class HomeController extends GetxController {
   void onInit() {
     getClasses();
     super.onInit();
-  }
-
-  @override
-  void dispose() {
-    controller!.dispose();
-    super.dispose();
   }
 
   Future<void> getClasses() async {
@@ -58,53 +48,4 @@ class HomeController extends GetxController {
       loading(false);
     }
   }
-
-  void onQRViewCreated(QRViewController controller) async {
-    this.controller = controller;
-    await controller.pauseCamera();
-
-    //if (kDebugMode) {
-    //await sendEntry(1);
-    //} else {
-    await controller.resumeCamera();
-
-    controller.scannedDataStream.listen((scanData) async {
-      controller.pauseCamera();
-      await sendEntry(1);
-      if (scanData.format == BarcodeFormat.qrcode &&
-          scanData.code!.isNotEmpty) {
-        controller.pauseCamera();
-        await sendEntry(int.parse(scanData.code ?? "0"));
-      }
-    });
-    //}
-  }
-
-  Future<void> sendEntry(int classId) async {
-    // try {
-    //   loading(true);
-    //   final data = {
-    //     "UserId": authController.user.id,
-    //     "ClassId": classId,
-    //   };
-
-    //   final response = await dio.post("entries/register", data: data);
-
-    //   if (response.statusCode != 200) {
-    //     throw response.data["data"];
-    //   }
-
-    //   await getClasses();
-    //   Util.successSnackBar(response.data["data"]);
-    // } on DioException catch (e) {
-    //   Util.errorSnackBar(e.response!.data["data"]);
-    // } catch (e) {
-    //   Util.errorSnackBar(e.toString());
-    // } finally {
-    //   Get.toNamed("/home");
-    //   loading(false);
-    // }
-  }
-
-  Future<void> saveTimeEntryClass(TimeOfDay timeOfDay) async {}
 }

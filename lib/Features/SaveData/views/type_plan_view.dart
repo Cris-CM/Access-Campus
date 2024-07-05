@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/Features/SaveData/controllers/save_data_controller.dart';
+import 'package:qr_tracker/Features/SaveData/Controllers/save_data_controller.dart';
 import 'package:qr_tracker/core/statics/const.dart';
 import 'package:qr_tracker/core/widgets/custom_button.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';

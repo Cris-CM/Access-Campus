@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
@@ -67,36 +70,47 @@ class Util {
     );
   }
 
-  static List<DateTime> parseTime(String dia, String horas) {
+  static Future<List<DateTime>> parseTime(
+      String dateString, String timeString) async {
     // Paso 1: Limpiar y formatear la fecha
-    dia = dia.split(' - ')[1]; // Extraer "03 Abr 2024"
+    await initializeDateFormatting('es_ES', null);
+    Map<String, String> meses = {
+      "Ene": "01",
+      "Feb": "02",
+      "Mar": "03",
+      "Abr": "04",
+      "May": "05",
+      "Jun": "06",
+      "Jul": "07",
+      "Ago": "08",
+      "Sep": "09",
+      "Oct": "10",
+      "Nov": "11",
+      "Dic": "12",
+    };
 
     // Convertir a formato DateTime
-    DateFormat inputFormat = DateFormat("dd MMM yyyy", 'es_ES');
-    DateTime fecha = inputFormat.parse(dia);
+    DateFormat dateFormat = DateFormat.yMd('es_ES');
+    DateFormat timeFormat = DateFormat('HH:mm');
+    final year = dateString.split("-").last;
 
-    // Paso 2: Extraer las horas
-    List<String> horasPartes = horas.split(' - - ');
-    String horaInicio = horasPartes[0].trim();
-    String horaFin = horasPartes[1].trim();
+    final textoNew =
+        meses.keys.fold(year, (acc, key) => acc.replaceAll(key, meses[key]!));
 
-    // Paso 3: Combinar fecha y horas
-    DateTime dateTimeInicio = DateTime(
-      fecha.year,
-      fecha.month,
-      fecha.day,
-      int.parse(horaInicio.split(':')[0]),
-      int.parse(horaInicio.split(':')[1]),
-    );
+    final dateYear = textoNew.trim().replaceAll(" ", "/");
+    DateTime date = dateFormat.parse(dateYear);
 
-    DateTime dateTimeFin = DateTime(
-      fecha.year,
-      fecha.month,
-      fecha.day,
-      int.parse(horaFin.split(':')[0]),
-      int.parse(horaFin.split(':')[1]),
-    );
+    // Parseamos las horas de inicio y fin
+    List<String> times = timeString.split(' - - ');
+    DateTime startTime = timeFormat.parse(times[0]);
+    DateTime endTime = timeFormat.parse(times[1]);
 
-    return [dateTimeInicio, dateTimeFin];
+    // Combinamos la fecha con las horas
+    DateTime startDateTime = DateTime(
+        date.year, date.month, date.day, startTime.hour, startTime.minute);
+    DateTime endDateTime =
+        DateTime(date.year, date.month, date.day, endTime.hour, endTime.minute);
+
+    return [startDateTime, endDateTime];
   }
 }

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_binding.dart';
 import 'package:qr_tracker/Features/Auth/Views/login_view.dart';
-import 'package:qr_tracker/Features/Curse/controllers/curse_binding.dart';
+import 'package:qr_tracker/Features/Curse/Controllers/curse_binding.dart';
 import 'package:qr_tracker/Features/Curse/views/curse_view.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_binding.dart';
 import 'package:qr_tracker/Features/Chatbot/chatbot_view.dart';
@@ -9,8 +9,8 @@ import 'package:qr_tracker/Features/Home/Views/home_view.dart';
 import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
 import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
 import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
-import 'package:qr_tracker/Features/SaveData/controllers/save_data_binding.dart';
-import 'package:qr_tracker/Features/SaveData/views/type_plan_view.dart';
+import 'package:qr_tracker/Features/SaveData/Controllers/save_data_binding.dart';
+import 'package:qr_tracker/Features/SaveData/Views/type_plan_view.dart';
 import 'package:qr_tracker/Features/Splash/splash_view.dart';
 
 final getRouter = <GetPage>[
@@ -31,6 +31,7 @@ final getRouter = <GetPage>[
   GetPage(
     name: "/qrscan",
     page: () => const QrScanView(),
+    binding: HomeBinding(),
   ),
   GetPage(
     name: "/labs",

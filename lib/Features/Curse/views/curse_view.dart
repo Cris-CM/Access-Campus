@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/Features/Curse/controllers/curse_controller.dart';
+import 'package:qr_tracker/Features/Curse/Controllers/curse_controller.dart';
+import 'package:qr_tracker/Features/Curse/views/qr_show_view.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
+import 'package:qr_tracker/core/widgets/util.dart';
 import 'package:sizer/sizer.dart';
 
 class CurseView extends GetView<CurseController> {
@@ -10,8 +12,14 @@ class CurseView extends GetView<CurseController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.getHourCurses(Get.arguments);
     return Scaffold(
+      appBar: AppBar(
+        title: const Texts.bold(
+          "Laboratorios Activos",
+          fontSize: 16,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -19,10 +27,6 @@ class CurseView extends GetView<CurseController> {
           },
           child: Column(
             children: [
-              const Texts.bold(
-                "Laboratorios Activos",
-                fontSize: 16,
-              ).marginOnly(bottom: 3.h),
               Obx(() {
                 return Expanded(
                   child: ListView.separated(
@@ -34,9 +38,34 @@ class CurseView extends GetView<CurseController> {
                     itemCount: controller.hourCurseModel.length,
                     itemBuilder: (context, index) {
                       final curse = controller.hourCurseModel[index];
+
                       return ListTile(
+                        leading: IconButton(
+                          onPressed: () {
+                            Get.to(
+                              () => QrShowView(),
+                              arguments: curse.ambiente,
+                            );
+                          },
+                          icon: Icon(Icons.qr_code),
+                        ),
+                        onTap: () {
+                          if (controller.hourSaved
+                              .any((element) => element.dias == curse.dias)) {
+                            return;
+                          }
+                          Get.toNamed("/qrscan", arguments: curse)!
+                              .then((value) {
+                            controller.hourSaved.add(value);
+                            Util.successSnackBar("Asistencia guardada");
+                          });
+                        },
                         shape: ContinuousRectangleBorder(
                           borderRadius: BorderRadius.circular(20.sp),
+                          side: controller.hourSaved
+                                  .any((element) => element.dias == curse.dias)
+                              ? BorderSide(color: Palette.blue900, width: 3)
+                              : const BorderSide(color: Colors.transparent),
                         ),
                         tileColor: Palette.black.withOpacity(.2),
                         title: Texts.bold(
@@ -44,7 +73,7 @@ class CurseView extends GetView<CurseController> {
                           fontSize: 10,
                         ),
                         subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Texts.regular(
                               curse.dias,
