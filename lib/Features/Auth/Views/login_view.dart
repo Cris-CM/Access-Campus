@@ -9,7 +9,8 @@ import 'package:qr_tracker/core/widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginView extends GetView<AuthController> {
-  const LoginView({super.key});
+  LoginView({super.key});
+  final loginKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class LoginView extends GetView<AuthController> {
                   color: Palette.white,
                 ),
                 child: Form(
-                  key: controller.loginKey,
+                  key: loginKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -57,7 +58,7 @@ class LoginView extends GetView<AuthController> {
                       ).paddingOnly(bottom: 2.h),
                       CustomInput(
                         controller: controller.usernameController,
-                        title: "Usuario",
+                        title: "Codigo de usuario",
                         icon: Icons.person_2_outlined,
                         validator: (p0) {
                           if (p0 == null) return "Rellene el campo";
@@ -68,20 +69,26 @@ class LoginView extends GetView<AuthController> {
                       CustomInput(
                         controller: controller.passwordController,
                         title: "Contraseña",
-                        icon: Icons.lock,
+                        icon: Icons.person_2_outlined,
                         isPassword: true,
-                        inputType: TextInputType.number,
                         validator: (p0) {
                           if (p0 == null) return "Rellene el campo";
                           if (p0.isEmpty) return "Rellene el campo";
                           return null;
                         },
+                        inputType: TextInputType.number,
                       ).paddingOnly(bottom: 2.h),
                       Align(
                         alignment: Alignment.center,
                         child: CustomButton(
-                          onPressed: controller.login,
-                          text: "Iniciar Sesion",
+                          onPressed: () async {
+                            if (!loginKey.currentState!.validate()) {
+                              return;
+                            }
+
+                            await controller.login();
+                          },
+                          text: "Ingresar",
                         ),
                       ),
                     ],

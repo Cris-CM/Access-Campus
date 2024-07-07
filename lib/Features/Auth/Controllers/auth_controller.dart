@@ -1,40 +1,57 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/Features/Auth/Models/user_model.dart';
-import 'package:qr_tracker/core/network/dio_config.dart';
+import 'package:qr_tracker/core/models/users_model.dart';
 import 'package:qr_tracker/core/widgets/util.dart';
+import 'package:qr_tracker/services/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthController extends GetxController {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final loginKey = GlobalKey<FormState>();
-  late UserModel user;
-  final loading = false.obs;
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      autoLogin();
+    }
+    super.onInit();
+  }
 
-  bool isTeacher() => user.rol == 2;
+  final usernameController = TextEditingController(text: "profesor");
+  final passwordController = TextEditingController(text: "44442222");
+
+  final loading = false.obs;
+  final authService = AuthService();
+  late UsersModel user;
 
   Future<void> login() async {
-    if (!loginKey.currentState!.validate()) return;
-
-    final data = {
-      "Username": usernameController.text,
-      "Password": int.tryParse(passwordController.text) ?? 0,
-    };
-
     try {
       loading(true);
-      final response = await dio.post("auth/login", data: data);
+      final userSupabase = await authService.login(
+        usernameController.text,
+        passwordController.text,
+      );
 
-      if (response.statusCode != 200) {
-        throw response.data["data"];
-      }
+      user = await authService.getUserByUID(userSupabase.user!.id);
 
-      user = UserModel.fromJson(response.data["data"]);
-
+      Util.successSnackBar("Autenticado correctamente");
       Get.toNamed("/home");
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
+    } on AuthException catch (e) {
+      Util.errorSnackBar(e.message);
+    } catch (e) {
+      Util.errorSnackBar(e.toString());
+    } finally {
+      loading(false);
+    }
+  }
+
+  Future<void> autoLogin() async {
+    try {
+      loading(true);
+
+      user = await authService.getUserByUID(Get.arguments);
+
+      Util.successSnackBar("Autenticado correctamente");
+      Get.toNamed("/home");
+    } on AuthException catch (e) {
+      Util.errorSnackBar(e.message);
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {
