@@ -1,16 +1,22 @@
-# qr_tracker
+# Access Campus
 
-A new Flutter project.
+Proyecto para la gestion de la asistencia en los laboratorios en el campus UCV.
 
-## Getting Started
+## Descripcion
 
-This project is a starting point for a Flutter application.
+Se utilizo supabase para la base de datos y auth.
+Para el chatbot se utilizo Geminis AI.
 
-A few resources to get you started if this is your first Flutter project:
+Disponible en IOS y Android.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Imagenes
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+<img src="https://imgur.com/FRS2YCQ.png" width=200></img>
+<img src="https://imgur.com/sZTXJbC.png" width=200></img>
+<img src="https://imgur.com/1P9FfdD.png" width=200></img>
+<img src="https://imgur.com/cYJi9wA.png" width=200></img>
+<img src="https://imgur.com/pF8xOjB.png" width=200></img>
+<img src="https://imgur.com/9dLYZfN.png" width=200></img>
+<img src="https://imgur.com/snMohOW.png" width=200></img>
+<img src="https://imgur.com/ldSj5bV.png" width=200></img>
