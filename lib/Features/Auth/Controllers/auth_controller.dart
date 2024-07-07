@@ -29,7 +29,7 @@ class AuthController extends GetxController {
         passwordController.text,
       );
 
-      user = await authService.getUser(userSupabase.user!.id);
+      user = await authService.getUserByUID(userSupabase.user!.id);
 
       Util.successSnackBar("Autenticado correctamente");
       Get.toNamed("/home");
@@ -46,7 +46,7 @@ class AuthController extends GetxController {
     try {
       loading(true);
 
-      user = await authService.getUser(Get.arguments);
+      user = await authService.getUserByUID(Get.arguments);
 
       Util.successSnackBar("Autenticado correctamente");
       Get.toNamed("/home");

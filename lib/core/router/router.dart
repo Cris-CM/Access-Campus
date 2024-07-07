@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_binding.dart';
 import 'package:qr_tracker/Features/Auth/Views/login_view.dart';
+import 'package:qr_tracker/Features/History/controllers/history_binding.dart';
+import 'package:qr_tracker/Features/History/views/history_view.dart';
 import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
 import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
 import 'package:qr_tracker/Features/Sessions/controllers/sessions_binding.dart';
@@ -44,5 +46,10 @@ final getRouter = <GetPage>[
     name: "/labs",
     page: () => const LabsView(),
     binding: LabsBinding(),
+  ),
+  GetPage(
+    name: "/history",
+    page: () => const HistoryView(),
+    binding: HistoryBinding(),
   ),
 ];

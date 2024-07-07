@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
@@ -33,8 +32,6 @@ class SessionsController extends GetxController {
 
       sessions.addAll(list);
       Util.successSnackBar("Sesiones cargadas correctamente");
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {
@@ -63,8 +60,6 @@ class SessionsController extends GetxController {
         authController.user.id,
       );
       Util.successSnackBar("Asistencia registrada correctamente");
-    } on DioException catch (e) {
-      Util.errorSnackBar(e.response!.data["data"]);
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {

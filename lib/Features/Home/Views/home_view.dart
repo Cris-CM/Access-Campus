@@ -52,6 +52,17 @@ class HomeView extends GetView<HomeController> {
                               ),
                               leading: const Icon(Icons.add_box),
                             ),
+                          if (controller.authController.user.isTeacher)
+                            ListTile(
+                              onTap: () {
+                                Get.toNamed("/history");
+                              },
+                              title: const Texts.bold(
+                                "Historial",
+                                color: Palette.kPrimary,
+                              ),
+                              leading: const Icon(Icons.history),
+                            ),
                           ListTile(
                             onTap: () async {
                               await Supabase.instance.client.auth.signOut();

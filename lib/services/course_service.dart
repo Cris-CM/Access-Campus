@@ -1,18 +1,17 @@
+import 'package:qr_tracker/core/models/courses_model.dart';
 import 'package:qr_tracker/core/models/entries_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class EntriesService {
+class CourseService {
   final supabase = Supabase.instance.client;
 
-  Future<void> sendEntry(int sessionId, int userId) async {
-    await supabase.from("Entries").insert(
-          EntriesModel(
-                  id: 0,
-                  userId: userId,
-                  sessionId: sessionId,
-                  entry: DateTime.now())
-              .toJson(),
-        );
+  Future<CoursesModel> getCourse(int courseId) async {
+    final data = await supabase.from("Courses").select().eq("id", courseId);
+
+    if (data.isEmpty) {
+      throw "No se encontro el curso";
+    }
+    return CoursesModel.fromJson(data.first);
   }
 
   Future<List<EntriesModel>> getEntries() async {

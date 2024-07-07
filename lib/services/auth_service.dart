@@ -11,8 +11,17 @@ class AuthService {
     return user;
   }
 
-  Future<UsersModel> getUser(String uid) async {
+  Future<UsersModel> getUserByUID(String uid) async {
     final user = await supabase.from("Users").select().eq("uid", uid);
+    if (user.isEmpty) {
+      throw "Usuario no encontrado";
+    }
+
+    return UsersModel.fromJson(user.first);
+  }
+
+  Future<UsersModel> getUserByID(int id) async {
+    final user = await supabase.from("Users").select().eq("id", id);
     if (user.isEmpty) {
       throw "Usuario no encontrado";
     }

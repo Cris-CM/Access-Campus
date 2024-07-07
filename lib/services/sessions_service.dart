@@ -89,4 +89,17 @@ class SessionsService {
         .update(sessionsModel.toJson())
         .eq("id", sessionsModel.id);
   }
+
+  Future<SessionsModel> getSession(int sessionId) async {
+    final data = await supabase.from("Sessions").select().eq(
+          "id",
+          sessionId,
+        );
+
+    if (data.isEmpty) {
+      throw "No se encontro la session";
+    }
+
+    return SessionsModel.fromJson(data.first);
+  }
 }
