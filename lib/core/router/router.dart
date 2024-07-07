@@ -1,16 +1,14 @@
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_binding.dart';
 import 'package:qr_tracker/Features/Auth/Views/login_view.dart';
-import 'package:qr_tracker/Features/Curse/Controllers/curse_binding.dart';
-import 'package:qr_tracker/Features/Curse/views/curse_view.dart';
+import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
+import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
+import 'package:qr_tracker/Features/Sessions/controllers/sessions_binding.dart';
+import 'package:qr_tracker/Features/Sessions/views/sessions_view.dart';
 import 'package:qr_tracker/Features/Home/Controllers/home_binding.dart';
 import 'package:qr_tracker/Features/Chatbot/chatbot_view.dart';
 import 'package:qr_tracker/Features/Home/Views/home_view.dart';
-import 'package:qr_tracker/Features/Home/Views/qr_scan_view.dart';
-import 'package:qr_tracker/Features/Labs/Controllers/labs_binding.dart';
-import 'package:qr_tracker/Features/Labs/Views/labs_view.dart';
-import 'package:qr_tracker/Features/SaveData/Controllers/save_data_binding.dart';
-import 'package:qr_tracker/Features/SaveData/Views/type_plan_view.dart';
+import 'package:qr_tracker/Features/ScanQR/scan_qr_view.dart';
 import 'package:qr_tracker/Features/Splash/splash_view.dart';
 
 final getRouter = <GetPage>[
@@ -30,13 +28,7 @@ final getRouter = <GetPage>[
   ),
   GetPage(
     name: "/qrscan",
-    page: () => const QrScanView(),
-    binding: HomeBinding(),
-  ),
-  GetPage(
-    name: "/labs",
-    page: () => const LabsView(),
-    binding: LabsBinding(),
+    page: () => const ScanQrView(),
   ),
   GetPage(
     name: "/chatbot",
@@ -44,13 +36,13 @@ final getRouter = <GetPage>[
     binding: AuthBinding(),
   ),
   GetPage(
-    name: "/typePlan",
-    page: () => const TypePlanView(),
-    binding: SaveDataBinding(),
+    name: "/sessions",
+    page: () => const SessionsView(),
+    binding: SessionsBinding(),
   ),
-   GetPage(
-    name: "/curse",
-    page: () => const CurseView(),
-    binding: CurseBinding(),
+  GetPage(
+    name: "/labs",
+    page: () => const LabsView(),
+    binding: LabsBinding(),
   ),
 ];

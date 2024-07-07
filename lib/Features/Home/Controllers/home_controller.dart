@@ -1,49 +1,33 @@
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Auth/Controllers/auth_controller.dart';
-import 'package:qr_tracker/core/models/curse_model.dart';
-import 'package:qr_tracker/core/network/dio_config.dart';
-import 'package:qr_tracker/core/statics/const.dart';
-import 'package:qr_tracker/core/statics/urls.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:qr_tracker/core/models/courses_model.dart';
+import 'package:qr_tracker/core/widgets/util.dart';
+import 'package:qr_tracker/services/home_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
   final authController = Get.find<AuthController>();
   final loading = false.obs;
-  var selectedStartDateTime = Rxn<DateTime>();
-  var selectedEndDateTime = Rxn<DateTime>();
-  final curseModel = <CurseModel>[].obs;
+  final courses = <CoursesModel>[].obs;
+  final homeService = HomeService();
+  final user = Supabase.instance.client.auth.currentUser;
 
   @override
   void onInit() {
-    getClasses();
+    getCourses();
     super.onInit();
   }
 
-  Future<void> getClasses() async {
+  Future<void> getCourses() async {
     try {
       loading(true);
-      curseModel.clear();
-      final sp = await SharedPreferences.getInstance();
+      courses.clear();
 
-      final data = {
-        "cPerCodigo": authController.userShort.item.cPerCodigo,
-        "nCurCodigo": sp.getString(keyPlan),
-        "nPerAluRegCodigo": "0",
-        "nPrdCodigo": sp.getString(keyPeriod),
-        "nTipCur": int.parse(sp.getString(keyTypePlan) ?? "0")
-      };
+      courses.addAll(await homeService.getCourses(authController.user.id));
 
-      dio.options.headers['Authorization'] =
-          'Bearer ${authController.bearerTokenModel.accessToken}';
-
-      final response = await dio.post(
-        Url.obtenerAsignaturasMatriculadas,
-        data: data,
-      );
-
-      curseModel.addAll((response.data["lstItem"] as List)
-          .map((e) => CurseModel.fromJson(e))
-          .toList());
+      Util.successSnackBar("Cursos cargados correctamente");
+    } catch (e) {
+      Util.errorSnackBar("Error al obtener cursos");
     } finally {
       loading(false);
     }

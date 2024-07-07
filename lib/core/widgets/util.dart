@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -34,7 +32,7 @@ class Util {
           vertical: 18,
         ),
         borderRadius: 8,
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -65,7 +63,7 @@ class Util {
           vertical: 18,
         ),
         borderRadius: 8,
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -112,5 +110,15 @@ class Util {
         DateTime(date.year, date.month, date.day, endTime.hour, endTime.minute);
 
     return [startDateTime, endDateTime];
+  }
+
+  static DateTime updateDateTimeToTimeofDay(DateTime date, TimeOfDay time) {
+    return DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
   }
 }

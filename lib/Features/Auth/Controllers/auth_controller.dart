@@ -1,64 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_tracker/core/models/bearer_token_model.dart';
-import 'package:qr_tracker/core/models/user_model.dart';
-import 'package:qr_tracker/core/models/user_short_model.dart';
-import 'package:qr_tracker/core/network/dio_config.dart';
-import 'package:qr_tracker/core/statics/const.dart';
-import 'package:qr_tracker/core/statics/urls.dart';
+import 'package:qr_tracker/core/models/users_model.dart';
 import 'package:qr_tracker/core/widgets/util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:qr_tracker/services/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthController extends GetxController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      login(Get.arguments);
+      autoLogin();
     }
     super.onInit();
   }
 
-  final usernameController = TextEditingController(text: "7002539160");
-  final loading = false.obs;
-  late UserModel userModel;
-  late UserShort userShort;
-  late BearerTokenModel bearerTokenModel;
+  final usernameController = TextEditingController(text: "profesor");
+  final passwordController = TextEditingController(text: "44442222");
 
-  Future<void> login(String user) async {
-    final data = {
-      "cPerCodigo": user,
-    };
+  final loading = false.obs;
+  final authService = AuthService();
+  late UsersModel user;
+
+  Future<void> login() async {
     try {
       loading(true);
-      final response = await dio.post(Url.obtenerPersona, data: data);
-
-      if (response.statusCode != 200) {
-        throw response.data["data"];
-      }
-
-      if (response.data["item"] == null) {
-        throw "Usuario invalido";
-      }
-
-      userShort = UserShort.fromJson(response.data);
-
-      final responseUser = await dio.post(
-        Url.obtenerDatosPersonales,
-        data: data,
+      final userSupabase = await authService.login(
+        usernameController.text,
+        passwordController.text,
       );
 
-      userModel = UserModel.fromJson(responseUser.data);
+      user = await authService.getUser(userSupabase.user!.id);
 
-      var sp = await SharedPreferences.getInstance();
-
-      await sp.setString("userKey", user);
-      await getBearerToken();
-
-      if (sp.get(keyTypePlan) == null || sp.get(keyPlan) == null) {
-        Get.toNamed("/typePlan");
-      } else {
-        Get.toNamed("/home");
-      }
+      Util.successSnackBar("Autenticado correctamente");
+      Get.toNamed("/home");
+    } on AuthException catch (e) {
+      Util.errorSnackBar(e.message);
     } catch (e) {
       Util.errorSnackBar(e.toString());
     } finally {
@@ -66,12 +42,20 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> getBearerToken() async {
+  Future<void> autoLogin() async {
     try {
-      final response = await dio.post(Url.obtenerBearerToken);
+      loading(true);
 
-      bearerTokenModel = BearerTokenModel.fromJson(response.data);
-      
-    } catch (e) {}
+      user = await authService.getUser(Get.arguments);
+
+      Util.successSnackBar("Autenticado correctamente");
+      Get.toNamed("/home");
+    } on AuthException catch (e) {
+      Util.errorSnackBar(e.message);
+    } catch (e) {
+      Util.errorSnackBar(e.toString());
+    } finally {
+      loading(false);
+    }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_tracker/Features/Labs/Controllers/labs_controller.dart';
-import 'package:qr_tracker/Features/Labs/Widgets/labs_item.dart';
+import 'package:qr_tracker/Features/Labs/widgets/lab_item.dart';
 import 'package:qr_tracker/core/colors/palette.dart';
-import 'package:qr_tracker/core/widgets/circular_loading.dart';
+import 'package:qr_tracker/core/models/sessions_model.dart';
 import 'package:qr_tracker/core/widgets/texts.dart';
 
 class LabsView extends GetView<LabsController> {
@@ -17,41 +17,45 @@ class LabsView extends GetView<LabsController> {
         leading: const BackButton(
           color: Palette.white,
         ),
-        title: const Texts.bold(
-          "Laboratorios",
-          color: Palette.white,
+        title: const Texts.regular(
+          'Cursos',
           fontSize: 14,
+          color: Palette.white,
         ),
-        centerTitle: true,
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await controller.getClasses();
+          await controller.getCourses();
         },
-        child: Obx(() {
-          if (controller.loading()) {
-            return const CircularLoadingWidget();
-          }
+        child: Column(
+          children: [
+            Expanded(
+              child: Obx(() {
+                return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: controller.courses.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final course = controller.courses[index];
+                    return FutureBuilder<List<SessionsModel>>(
+                        future: controller.getSessions(course.id),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return LabItem(
+                              coursesModel: controller.courses[index],
+                              sessions: snapshot.data!,
+                            );
+                          }
 
-          return ListView.separated(
-            separatorBuilder: (context, index) {
-              return Container(
-                width: double.infinity,
-                height: 1,
-                color: Palette.kPrimary,
-              );
-            },
-            scrollDirection: Axis.vertical,
-            itemCount: 0,
-            itemBuilder: (BuildContext context, int index) {
-              return LabsItem(
-                onPressed: () {
-                  Get.toNamed("/qrscan");
-                },
-              );
-            },
-          );
-        }),
+                          return const Center(
+                            child: LinearProgressIndicator(),
+                          );
+                        });
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

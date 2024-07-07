@@ -65,6 +65,17 @@ class LoginView extends GetView<AuthController> {
                           if (p0.isEmpty) return "Rellene el campo";
                           return null;
                         },
+                      ).paddingOnly(bottom: 2.h),
+                      CustomInput(
+                        controller: controller.passwordController,
+                        title: "Contraseña",
+                        icon: Icons.person_2_outlined,
+                        isPassword: true,
+                        validator: (p0) {
+                          if (p0 == null) return "Rellene el campo";
+                          if (p0.isEmpty) return "Rellene el campo";
+                          return null;
+                        },
                         inputType: TextInputType.number,
                       ).paddingOnly(bottom: 2.h),
                       Align(
@@ -75,8 +86,7 @@ class LoginView extends GetView<AuthController> {
                               return;
                             }
 
-                            await controller
-                                .login(controller.usernameController.text);
+                            await controller.login();
                           },
                           text: "Ingresar",
                         ),
